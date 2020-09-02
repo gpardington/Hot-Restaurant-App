@@ -1,65 +1,30 @@
-// Dependencies
+// DEPENDENCIES
+// Series of npm packages that we will use to give our server useful functionality
 // =============================================================
-const express = require("express");
-const path = require("path");
-
-const reservations = [];
-const waitList = [];
-
-// Sets up the Express App
-// =============================================================
+var express = require("express");
+// Express configuration
+// This sets up the basic properties for our express server
+// Tells node that we are creating an "express" server
 var app = express();
-var PORT = 3000;
 
-// Sets up the Express app to handle data parsing
+// Sets an initial port that we will use later in the listener
+var PORT = process.env.PORT || 8080;
+
+// Sets up the Express app to handle the data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Routes
+// ROUTER
 // =============================================================
-// Basic route that sends the user first to the AJAX Page
-app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
+// The below points our server to a series of "route" files.
+// These routes give our server a map of how to respond when users visit or request data from various URLs
+require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
-app.get("/tables", function(req, res) {
-  res.sendFile(path.join(__dirname, "tables.html"));
-});
-
-app.get("/reservation", function(req, res) {
-    res.sendFile(path.join(__dirname, "reservation.html"));
-  });
-
-// Displays all available tables
-app.get("/api/tables", function(req, res) {
-  return res.json(tables);
-});
-
-// Displays a single character, or returns false
-app.get("/api/waitlist", function(req, res) {
-    return res.json(waitList);
-  });
-
-// Clears everything
-app.get("/api/clear", function(req, res) {
-    return res.json(clear);
-  });
-
-// Makes new reservation
-app.post("/api/table", function(req, res) {
-    var newReservation = req.body;
-
-    if (reservations.length < 5) {
-        reservations.push(newReservation);
-        res.json(true);
-    } else {
-        waitList.push(newReservation);
-        res.json(false);
-    }
-});
- 
-// Starts the server to begin listening
+// LISTENER
 // =============================================================
+// The below code starts our server
+
 app.listen(PORT, function() {
   console.log("App listening on PORT " + PORT);
 });

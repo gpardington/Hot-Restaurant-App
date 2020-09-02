@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <title>Reservation</title>
     <style>
@@ -42,22 +43,22 @@
           <form>
             <div class="form-group">
                 <label for="exampleInputEmail1">Name</label>
-                <input type="text" class="form-control" id="aleph" aria-describedby="emailHelp">
+                <input type="text" class="form-control" id="reserve_name" aria-describedby="emailHelp">
               </div>
             <div class="form-group">
                 <label for="exampleInputNumber">Phone Number</label>
-                <input type="text" class="form-control" id="beth" aria-describedby="emailHelp">
+                <input type="text" class="form-control" id="reserve_phone" aria-describedby="emailHelp">
               </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Email</label>
-              <input type="email" class="form-control" id="gimmel" aria-describedby="emailHelp">
+              <input type="email" class="form-control" id="reserve_email" aria-describedby="emailHelp">
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Unique ID</label>
-              <input type="text" class="form-control" id="daleth">
+              <input type="text" class="form-control" id="reserve_uniqueID">
             </div>
             <div class="form-group form-check">
-            <button type="submit" class="btn btn-primary" id="agrippa">Submit</button>
+            <button type="submit" class="btn btn-primary" id="submit">Submit</button>
           </form>
         </div>
       </div>
@@ -66,22 +67,21 @@
         <a href="apilink"></a>
     </div>
 
-    <script type="text/javascript">
-      $("#agrippa").on("click", function(event) {
-      event.preventDefault();
-      var newTable = {
-        name: $("#aleph").val().trim(),
-        phone: $("#beth").val().trim(),
-        email: $("#gimmel").val().trim(),
-        id: $("#daleth").val().trim()
-      };
-
-      $.post("/api/table", newTable)
+ 
+</body>
+<script type="text/javascript">
+    $("#submit").on("click", function(event) {
+        event.preventDefault();
+        var newReservation = {
+            name: $("#reserve_name").val().trim(),
+            phone: $("#reserve_phone").val().trim(),
+            email: $("#reserve_email").val().trim(),
+            uniqueID: $("#reserve_uniqueID").val().trim(),
+        }
+        $.post("api/tables", newReservation)
         .then(function(data) {
-          console.log("reservation.html", data);
-          alert("Adding table...");
+            alert("Adding table...")
         });
     });
     </script>
-</body>
 </html>
