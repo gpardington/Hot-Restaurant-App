@@ -20,8 +20,8 @@
           <h2 class="text-center">Make Your Reservation</h2>
           <br>
           <div class="text-center">
-          <a href="/tables"><button class="btn btn-lg btn-primary"><span class="fa fa-list-alt"></span> View Tables</button></a>
-          <a href="/"><button class="btn btn-lg btn-default"><span class="fa fa-home"></span> Home</button></a>
+          <a href="tables.html"><button class="btn btn-lg btn-primary"><span class="fa fa-list-alt"></span> View Tables</button></a>
+          <a href="home.html"><button class="btn btn-lg btn-default"><span class="fa fa-home"></span> Home</button></a>
           </div>
       </div>
     <div class="row">
@@ -71,10 +71,10 @@
     $(".submit").on("click", function(event) {
         event.preventDefault();
         var newReservation = {
-            name: $("#reserve-name").val().trim(),
-            phone: $("#reserve-phone").val().trim(),
-            email: $("#reserve-email").val().trim(),
-            uniqueID: $("#reserve-unique-id").val().trim(),
+            customerName: $("#reserve-name").val().trim(),
+            customerPhone: $("#reserve-phone").val().trim(),
+            customerEmail: $("#reserve-email").val().trim(),
+            customerID: $("#reserve-unique-id").val().trim(),
         };
 
         console.log(newReservation);
@@ -96,4 +96,4 @@
     });
 
   });
-    </script>
+  </script>
