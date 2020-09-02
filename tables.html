@@ -57,29 +57,9 @@
         <a href="apilink"></a>
     </div>
 
-    <script type="text/javascript">
-        $.get("/api/tables/", function(data) {
-          console.log(data);
-          if (data) {
-            data.forEach(function(reservation){
-              $("#tables").append($("<div>").text(reservation.id))
-              console.log(reservation)
-            })
-
-          } else {
-            $("#tables").text("There are no reservations available")
-          }
-        });  
-
-        $.get("/api/waitlist/", function(data) {
-          console.log(data);
-          if (data) {
-            data.forEach(function(reservation){
-              $("#waitList").append($("<div>").text(reservation.id))
-              console.log(reservation)
-            })
-          }
-        });  
-    </script>
+    
 </body>
+<script type="text/javascript">
+$.get("")
+</script>
 </html>

@@ -1,0 +1,26 @@
+{
+  "name": "hot-restaurant-app",
+  "version": "1.0.0",
+  "description": "Hot Restaurant App",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpardington/Hot-Restaurant-App.git"
+  },
+  "author": "Grant Pardington",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gpardington/Hot-Restaurant-App/issues"
+  },
+  "homepage": "https://github.com/gpardington/Hot-Restaurant-App#readme"
+}
