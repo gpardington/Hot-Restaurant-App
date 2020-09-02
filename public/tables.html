@@ -3,63 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <title>Tables</title>
-    <style>
-        .title {
-            background-color:#d3d3d3;
-            border-radius: 25px;
-            padding-bottom: 64px;
-        }
-
-        .card-pad {
-            margin-top: 20px;
-            margin-left: 100px;
-            margin-right: 100px;
-        }
-        #reserve a {
-          color: #d3d3d3!important;
-          background-color: grey;
-          padding:10px;
-          border: 1px solid black;
-          border-radius: 10%;
-        }
-        #home a {
-          color: #d3d3d3!important;
-          background-color: grey;
-          padding:10px;
-          border: 1px solid black;
-          border-radius: 10%;
-        }
-    </style>
+    <title>Tables Page</title>
+     <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-    <div class="container title">
-        <i class="fas fa-fire"></i>
-        <h1 class="text-center"><span class="glyphicon glyphicon-fire"></span> Hot Restaurant</h1>
-        <hr>
-        <h2 class="text-center">Current Reservations & Waiting List</h2>
-     <div class="text-center">
-        <a href="reservation.html"><button type="button" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-credit-card"></span> Make Reservation</button></a>
-        <a href="index.html"><button type="button" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-home"></span> Home</button></a>
-     </div>
-    </div>
-    <div id="tables">
-
-
-    </div>
-    <div id="waitList">
-
-    </div>
-
-    <div class="footer">
-        <a href="apilink"></a>
-    </div>
-
-    
-</body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="text-center"><span class="fa fa-fire"></span> Hot Restaurant</h1>
+            <hr>
+            <h2 class="text-center">Current Reservations & Waiting List</h2>
+            <br>
+      
+            <div class="text-center">
+              <a href="/reserve"><button class="btn btn-lg btn-danger"><span class="fa fa-credit-card"></span> Make A Reservation</button></a>
+              <a href="/"><button class="btn btn-lg btn-default"><span class="fa fa-home"></span></button></a>
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-lg-12">
+      
+              <!-- Current Tables in Use -->
+              <div class="card">
+                <div class="card-header">
+                  <h4>Current Reservations</h4>
+                </div>
+                <div class="card-body">
+                  <ul id="tableList" class="list-group"></ul>
+                </div>
+              </div>
+      
+              <!-- Waiting List Card -->
+              <div class="card mt-4">
+                <div class="card-header">
+                  <h4>Waiting List</h4>
+                </div>
+                <div class="card-body">
+                  <ul id="waitList" class="list-group"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+      
+          <footer class="footer mt-4">
+            <div class="container">
+              <p>Control Panel</p>
+              <p><a href="#" id="clear">Clear Table</a> | <a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API
+                  Wait List</a>
+            </div>
+          </footer>
+      
+        </div>
+      
+      </body>
+<!-- Below handles how form data is loaded from the server -->
 <script type="text/javascript">
-$.("submit")
+// jQuery is used to "download: tge data from the server. Then we dynamically display the content in our table.
+function runTableQuery() {
+        //AJax function uses the URL of our API to get the data associated with it (initally set to local host)
+        $.ajax({ url: "/api/tables", method: "GET" })
+            .then(function(tableData) {
+                //Then we log the tableData to console where it will show up as an object
+                console.log(tableData);
+                console.log("--------------------------------");
+                
+                //Loop through to display all customers
+                for (var i = 0; i < tableData.length; i++) {
+                    //Get reference to the tableList element and populate it with tables
+                    var tableList = $("#tableList");
+                    //Then display the fields/data in the HTML
+                    var listItem = $("<li class='list-group-item mt-4'>");
+
+                    listItem.append(
+                        $("<h2>").text("Table #") + (i + 1)),
+                        $("<hr>"),
+                        $("<h2>").text("ID: " + tableData[i].customerID),
+                        $("<h2>").text("Name: " + tableData[i].customerName),
+                        $("<h2>").text("Email: " + tableData[i].customerEmail),
+                        $("<h2>").text("Phone: " + tableData[i].phoneNumber)
+                    
+
+                    tableList.append(listItem);
+                 }
+           });
+    }
+
+    function runWaitListQuery() {
+
+    // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+    $.ajax({ url: "/api/waitlist", method: "GET" })
+        .then(function(waitData) {
+
+        // Here we then log the waitlistData to console, where it will show up as an object.
+        console.log(waitData);
+        console.log("------------------------------------");
+
+        // Loop through and display each of the customers
+        for (var i = 0; i < waitData.length; i++) {
+
+        // Get a reference to the waitList element and populate it with tables
+        var waitList = $("#waitList");
+
+        // Then display the fields in the HTML (Section Name, Date, URL)
+        var listItem = $("<li class='list-group-item mt-4'>");
+
+      listItem.append(
+        $("<h2>").text("Table #" + (i + 1)),
+        $("<hr>"),
+        $("<h2>").text("ID: " + waitData[i].customerID),
+        $("<h2>").text("Name: " + waitData[i].customerName),
+        $("<h2>").text("Email: " + waitData[i].customerEmail),
+        $("<h2>").text("Phone: " + waitData[i].phoneNumber)
+      );
+
+      waitList.append(listItem);
+    }
+  });
+}
+
+// This function resets all of the data in our tables. This is intended to let you restart a demo.
+function clearTable() {
+alert("Clearing...");
+
+// Clear the tables on the server and then empty the elements on the client
+$.ajax({ url: "/api/clear", method: "POST" }).then(function() {
+  $("#waitList").empty();
+  $("#tableList").empty();
+});
+}
+
+$("#clear").on("click", clearTable);
+
+// Run Queries
+runTableQuery();
+runWaitListQuery();
+
+
 </script>
+
 </html>
